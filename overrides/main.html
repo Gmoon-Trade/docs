@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{# Hero card above the sidebar/content layout; enabled per page via front matter: hero + lead #}
+{% block hero %}
+  {% if page and page.meta and page.meta.hero %}
+    <div class="gm-hero-wrap">
+      <section class="gm-hero-card">
+        <h1>{{ page.meta.hero }}</h1>
+        {% if page.meta.lead %}<p>{{ page.meta.lead }}</p>{% endif %}
+      </section>
+    </div>
+  {% endif %}
+{% endblock %}

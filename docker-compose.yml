@@ -1,0 +1,12 @@
+services:
+  docs:
+    build: .
+    image: gemoon-docs:latest
+    ports:
+      - "8000:8000"
+    volumes:
+      # Docs are mounted from outside: edits apply instantly (live reload), no image rebuild needed
+      - ./docs:/site/docs:ro
+      - ./mkdocs.yml:/site/mkdocs.yml:ro
+      - ./overrides:/site/overrides:ro
+    restart: unless-stopped
