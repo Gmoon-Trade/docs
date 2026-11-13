@@ -1,6 +1,11 @@
+---
+icon: lucide/file-code
+---
+
 # Example article
 
 This is an example article. Copy the file, rename it and add it to `nav` in `mkdocs.yml`.
+{ .gm-lead }
 
 ## Text and links
 

@@ -11,3 +11,9 @@
     </div>
   {% endif %}
 {% endblock %}
+
+{# Previous / Next cards under the page content #}
+{% block content %}
+  {{ super() }}
+  {% include "partials/gm-pager.html" %}
+{% endblock %}
