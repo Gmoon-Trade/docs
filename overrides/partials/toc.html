@@ -1,0 +1,32 @@
+{#- Material's TOC, but the page title (H1) stays in the list as the first item, on the same level as the sections. -#}
+{% set title = lang.t("toc") %}
+{% if config.mdx_configs.toc and config.mdx_configs.toc.title %}
+  {% set title = config.mdx_configs.toc.title %}
+{% endif %}
+<nav class="md-nav md-nav--secondary" aria-label="{{ title | e }}">
+  {% set toc = page.toc %}
+  {% set first = toc | first %}
+  {% set page_title = none %}
+  {% if first and first.level == 1 %}
+    {% set page_title = first %}
+    {% set toc = first.children %}
+  {% endif %}
+  {% if toc or page_title %}
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      {{ title }}
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      {% if page_title %}
+        <li class="md-nav__item">
+          <a href="{{ page_title.url }}" class="md-nav__link">
+            <span class="md-ellipsis">{{ page_title.title }}</span>
+          </a>
+        </li>
+      {% endif %}
+      {% for toc_item in toc %}
+        {% include "partials/toc-item.html" %}
+      {% endfor %}
+    </ul>
+  {% endif %}
+</nav>

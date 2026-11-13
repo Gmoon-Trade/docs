@@ -1,11 +1,9 @@
-site_name: Gemoon Docs
-site_description: Gemoon documentation
+site_name: Gmoon Docs
+site_description: Gmoon documentation
 theme:
   name: material
   custom_dir: overrides
-  font:
-    text: Inter
-    code: JetBrains Mono
+  font: false
   logo: assets/gemoon-logo.svg
   favicon: assets/favicon.png
   palette:
@@ -14,22 +12,30 @@ theme:
     accent: custom
   features:
     - navigation.instant
-    - navigation.tabs
     - navigation.top
     - navigation.sections
-    - search.suggest
-    - search.highlight
     - content.code.copy
 extra_css:
   - stylesheets/web3.css
 extra_javascript:
   - javascripts/header.js
 nav:
-  - Docs:
-      - Get Started:
-          - Home: index.md
-      - Guides:
-          - Example article: guides/example.md
+  - Get Started:
+      - Overview: index.md
+      - Quick start: quick-start.md
+  - Guides:
+      - Launch a coin: guides/launch-a-coin.md
+      - Trade: guides/trade.md
+      - Earn: guides/earn.md
+      - Referrals: guides/referrals.md
+  - Concepts:
+      - Trading fees: concepts/trading-fees.md
+      - Vault and rewards: concepts/vault-and-rewards.md
+      - Reward assets: concepts/reward-assets.md
+      - Anti-sniper fee: concepts/anti-sniper-fee.md
+  - Resources:
+      - Supported assets: resources/supported-assets.md
+      - Contracts: resources/contracts.md
 markdown_extensions:
   - admonition
   - attr_list
@@ -40,10 +46,14 @@ markdown_extensions:
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
+      options:
+        custom_icons:
+          - overrides/.icons
   - pymdownx.tabbed:
       alternate_style: true
   - toc:
-      permalink: true
+      permalink: false
+      title: On this page
 
 extra:
   generator: false

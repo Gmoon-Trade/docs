@@ -1,0 +1,30 @@
+{#- Gmoon header, mirrors the front's .site-header: logo · search pill · Open app; on phones a search icon and the menu.
+    Material's own search UI is left out; its index (search/search_index.json) feeds javascripts/header.js. -#}
+{% set search_icon %}<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10.5007 15.9998C13.5383 15.9998 16.0007 13.5374 16.0007 10.4998C16.0007 7.46225 13.5383 4.99982 10.5007 4.99982C7.46317 4.99982 5.00073 7.46225 5.00073 10.4998C5.00073 13.5374 7.46317 15.9998 10.5007 15.9998Z"/><path d="M15.4137 15.0001L18.9997 18.5861" stroke-linecap="round"/></svg>{% endset %}
+<header class="md-header gm-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="{{ lang.t('header') }}">
+    <a href="{{ config.extra.homepage | d(nav.homepage.url, true) | url }}" class="gm-logo" aria-label="{{ config.site_name }}" data-md-component="logo">
+      {% include "partials/logo.html" %}
+    </a>
+    <div class="gm-actions">
+      <div class="gm-search-bar">
+        <div class="gm-search">
+          <div class="header-search">
+            {{ search_icon }}
+            <input type="text" role="combobox" aria-label="Search docs" placeholder="Search docs" autocomplete="off" spellcheck="false"
+              aria-autocomplete="list" aria-expanded="false" aria-controls="gm-search-results">
+            <kbd aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.53743 18.7658L12 12L14.4625 5.23419" stroke-linecap="round"/></svg></kbd>
+            <button type="button" aria-label="Clear search" hidden><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7.75732 16.2426L12 12M12 12L16.2426 7.75735M12 12L16.2426 16.2426M12 12L7.75732 7.75735" stroke-linecap="round"/></svg></button>
+          </div>
+          <div class="search-dropdown" id="gm-search-results" role="listbox" aria-label="Search results" hidden></div>
+        </div>
+        <button type="button" class="gm-search-cancel">Cancel</button>
+      </div>
+      <button type="button" class="gm-icon-button gm-search-open" aria-label="Open search">{{ search_icon }}</button>
+      <a class="gm-open-app" href="https://gmoon.trade" target="_blank" rel="noopener">Open app</a>
+      <label class="gm-icon-button gm-menu-button" for="__drawer" aria-label="Open menu">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 12h16M4 6h16M4 18h16"/></svg>
+      </label>
+    </div>
+  </nav>
+</header>
