@@ -22,20 +22,23 @@ extra_javascript:
 nav:
   - Get Started:
       - Overview: index.md
-      - Quick start: quick-start.md
-  - Guides:
       - Launch a coin: guides/launch-a-coin.md
       - Trade: guides/trade.md
       - Earn: guides/earn.md
       - Referrals: guides/referrals.md
   - Concepts:
+      - Coin and pool: concepts/coin-and-pool.md
       - Trading fees: concepts/trading-fees.md
+      - Anti-sniper fee: concepts/anti-sniper-fee.md
       - Vault and rewards: concepts/vault-and-rewards.md
       - Reward assets: concepts/reward-assets.md
-      - Anti-sniper fee: concepts/anti-sniper-fee.md
-  - Resources:
-      - Supported assets: resources/supported-assets.md
-      - Contracts: resources/contracts.md
+  - Integration:
+      - Contracts: integration/contracts.md
+      - Launching a coin: integration/launching-a-coin.md
+      - Buying and selling: integration/buying-and-selling.md
+      - Earn Vault: integration/earn-vault.md
+      - Reading state: integration/reading-state.md
+      - Events to index: integration/events.md
 markdown_extensions:
   - admonition
   - attr_list

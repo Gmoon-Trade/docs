@@ -197,8 +197,9 @@ body { -webkit-font-smoothing: antialiased; background: var(--bg-1); }
 .md-nav__link[href]:hover, .md-nav__link[href]:focus, .md-nav__link[for]:hover, .md-nav__link[for]:focus { color: var(--tf-1); }
 .md-nav__link > svg { width: 16px !important; height: 16px !important; flex: 0 0 16px; fill: none !important; stroke: currentColor; margin: 0 !important; }
 .md-nav__link--active, .md-nav__item .md-nav__link--active { color: var(--tf-1) !important; font-weight: 400; }
-/* left menu: only the current page is Medium, every other item Regular */
-.md-sidebar--primary .md-nav__link--active { font-weight: 500; }
+/* left menu: the current page and the hovered item are Medium, every other item Regular */
+.md-sidebar--primary .md-nav__link--active,
+.md-sidebar--primary .md-nav__link[href]:hover { font-weight: 500; }
 .md-nav__icon { color: var(--tf-4); }
 
 @media (min-width: 76.25em) {
@@ -356,30 +357,31 @@ body { -webkit-font-smoothing: antialiased; background: var(--bg-1); }
 }
 
 /* ---------------- Diagrams (Lens-style: card, round nodes, dashed connectors that flow downwards) ---------------- */
-.gm-diagram { margin: 0 0 24px; padding: 32px 16px; border-radius: 16px; background: var(--bg-2); box-shadow: inset 0 0 0 1px var(--border-1); overflow-x: auto; scrollbar-width: none; }
-.gm-diagram svg { display: block; width: 100%; max-width: 1000px; min-width: 640px; height: auto; margin: 0 auto; overflow: visible; }
+/* Every diagram has the same scale (1 svg unit = 0.75 px, set per diagram as --w = cropped width x 0.75), so fonts and
+   nodes are the same size everywhere. The card always spans the text column; top and bottom are a fixed 32px, the
+   diagram is centred and the left/right space is whatever is left. Narrow screens scroll inside the card. */
+.gm-diagram { margin: 0 0 24px; padding: 32px; border-radius: 16px; background: var(--bg-2); box-shadow: inset 0 0 0 1px var(--border-1); overflow-x: auto; scrollbar-width: none; }
+.gm-diagram svg { display: block; width: var(--w, 100%); min-width: var(--w, 0); max-width: none; height: auto; margin: 0 auto; overflow: visible; }
 .gm-diagram .d-node { fill: var(--bg-3); stroke: var(--border-2); stroke-width: 1; }
 .gm-diagram .d-pill { fill: var(--bg-3); stroke: rgb(255 255 255 / 10%); stroke-width: 1; }
 .gm-diagram .d-ring { fill: var(--bg-3); }
+.gm-diagram .d-logo-ring { fill: none; stroke: var(--border-2); stroke-width: 1; }
 .gm-diagram .d-mark { fill: var(--tf-1); }
 .gm-diagram .d-icon { fill: none; stroke: var(--tf-2); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .gm-diagram .d-line, .gm-diagram .d-hot { fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-dasharray: 4 6; }
 .gm-diagram .d-line { stroke: var(--bg-5); }
 .gm-diagram .d-hot { stroke: var(--tf-1); }
-/* Mask windows (Lens-style): a white piece three quarters of the segment long travels along it, entering at the
-   start and leaving into the next node, at the same speed as before (1.75 s per step, 5.7 s cycle). Step 1 trade ->
-   Vault + Protocol 0-1.75 s, 0.6 s pause; step 2 Vault -> swap + Protocol -> referrer 2.35-4.1 s; step 3 swap ->
-   creator + depositors starts at 3.35 s, when step 2's head reaches the swap (no stop at the swap); 0.6 s pause. */
-.gm-diagram .d-window { fill: none; stroke: #fff; stroke-width: 8; stroke-dasharray: .75 2; stroke-dashoffset: .75; animation: 5.7s linear infinite backwards; }
-.gm-diagram .d-step1 { animation-name: gm-step1; }
-.gm-diagram .d-step2 { animation-name: gm-step2; }
-.gm-diagram .d-step3 { animation-name: gm-step3; }
+/* Mask windows (Lens-style): a white piece 3/4 of the segment long travels along it in 1.75 s. Each segment sets
+   its start with animation-delay; the svg sets the cycle (--gm-cycle) and the matching keyframes (--gm-run).
+   A segment that continues another starts 1.0 s later, when the previous head reaches the junction, so the line
+   never breaks; a new stage starts 0.6 s after the previous one ends. Diagrams are built by scratchpad diagrams.py. */
+.gm-diagram .d-window { fill: none; stroke: #fff; stroke-width: 8; stroke-dasharray: .75 2; stroke-dashoffset: .75; animation: var(--gm-run, gm-run-57) var(--gm-cycle, 5.7s) linear infinite backwards; }
 .gm-diagram text { text-anchor: middle; font-family: Inter, Arial, sans-serif; }
-.gm-diagram .d-title { fill: var(--tf-1); font-size: 14px; font-weight: 500; }
-.gm-diagram .d-sub { fill: var(--tf-3); font-size: 13px; }
-@keyframes gm-step1 { 0% { stroke-dashoffset: .75; } 30.7%, 100% { stroke-dashoffset: -1; } }
-@keyframes gm-step2 { 0%, 41.23% { stroke-dashoffset: .75; } 71.93%, 100% { stroke-dashoffset: -1; } }
-@keyframes gm-step3 { 0%, 58.77% { stroke-dashoffset: .75; } 89.47%, 100% { stroke-dashoffset: -1; } }
+.gm-diagram .d-title { fill: var(--tf-1); font-size: 18px; font-weight: 500; }
+.gm-diagram .d-sub { fill: var(--tf-3); font-size: 16px; }
+@keyframes gm-run-57 { 0% { stroke-dashoffset: .75; } 30.7%, 100% { stroke-dashoffset: -1; } }
+@keyframes gm-run-67 { 0% { stroke-dashoffset: .75; } 26.12%, 100% { stroke-dashoffset: -1; } }
+@keyframes gm-run-335 { 0% { stroke-dashoffset: .75; } 52.24%, 100% { stroke-dashoffset: -1; } }
 @media (prefers-reduced-motion: reduce) { .gm-diagram .d-window { animation: none; } }
 
 /* Anchor jumps land below the sticky header (69px) with the same air as the page top. */
@@ -416,6 +418,6 @@ body { -webkit-font-smoothing: antialiased; background: var(--bg-1); }
 
 /* Chart pieces inside diagrams (anti-sniper fee): grid, axis labels, end dots */
 .gm-diagram .d-grid { fill: none; stroke: var(--border-1); stroke-width: 1; }
-.gm-diagram .d-axis { fill: var(--tf-4); font-size: 12px; }
+.gm-diagram .d-axis { fill: var(--tf-4); font-size: 15px; }
 .gm-diagram .d-curve { stroke-linejoin: round; }
 .gm-diagram .d-dot { fill: var(--bg-3); stroke: var(--tf-2); stroke-width: 1.5; }
