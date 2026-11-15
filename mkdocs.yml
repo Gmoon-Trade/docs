@@ -37,6 +37,7 @@ nav:
       - Launching a coin: integration/launching-a-coin.md
       - Buying and selling: integration/buying-and-selling.md
       - Earn Vault: integration/earn-vault.md
+      - Referrals: integration/referrals.md
       - Reading state: integration/reading-state.md
       - Events to index: integration/events.md
 markdown_extensions:
