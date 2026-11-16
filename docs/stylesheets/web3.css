@@ -379,6 +379,41 @@ body { -webkit-font-smoothing: antialiased; background: var(--bg-1); }
   .md-content__inner { margin: 0 !important; padding: 24px 0 64px; }
 }
 
+/* ---------------- Phone menu (drawer) ----------------
+   Material turns every group into a panel that slides over the list and has a "back" title; that title is hidden
+   above, so a group could not be left and its items hid the others. Here the drawer is a flat list like the desktop
+   sidebar: group labels, then their pages, all visible, one scroll. */
+@media (max-width: 76.234375em) {
+  .md-sidebar--primary { --gm-drawer: min(20rem, 86vw); width: var(--gm-drawer); background: var(--bg-1); }
+  [dir=ltr] .md-sidebar--primary { left: calc(-1 * var(--gm-drawer)); }
+  [data-md-toggle=drawer]:checked ~ .md-container .md-sidebar--primary {
+    transform: translateX(var(--gm-drawer)); box-shadow: 1px 0 0 var(--border-1);
+  }
+  .md-sidebar--primary .md-nav--primary,
+  .md-sidebar--primary .md-nav--primary > .md-nav__list { background: var(--bg-1); box-shadow: none; }
+  .md-sidebar--primary .md-nav--primary > .md-nav__list { padding: 20px 24px 32px !important; overflow-y: auto; scroll-snap-type: none; }
+
+  /* every group open, no slide-in panels */
+  .md-nav--primary .md-nav__item--nested > .md-nav {
+    position: static !important; display: block !important; transform: none !important; opacity: 1 !important;
+    visibility: visible !important; height: auto !important; background: none; box-shadow: none;
+  }
+  .md-nav--primary .md-nav__item--nested > .md-nav > .md-nav__list { overflow: visible; background: none; box-shadow: none; }
+
+  /* group label: GET STARTED, CONCEPTS, INTEGRATION, as on the desktop */
+  .md-nav__item--section { margin: 0 0 28px; }
+  .md-nav__item--section > .md-nav__link {
+    color: var(--tf-4) !important; font: 500 12px/14px Inter, Arial, sans-serif; text-transform: uppercase; letter-spacing: 0;
+    padding: 0 0 8px; pointer-events: none;
+  }
+  .md-nav__item--section > .md-nav__link .md-nav__icon { display: none; }
+  .md-nav--primary .md-nav__link { font-size: 15px; padding: 9px 0; }
+  .md-nav--primary .md-nav__item { border: 0; }
+  /* the current page's own table of contents is not part of the drawer */
+  .md-sidebar--primary .md-nav--secondary, .md-sidebar--primary label.md-nav__link[for=__toc] .md-nav__icon { display: none !important; }
+  .md-nav--primary .md-nav__item--section > .md-nav__link { font-size: 12px; padding: 0 0 8px; }
+}
+
 /* ---------------- Diagrams (Lens-style: card, round nodes, dashed connectors that flow downwards) ---------------- */
 /* Every diagram has the same scale (1 svg unit = 0.75 px, set per diagram as --w = cropped width x 0.75), so fonts and
    nodes are the same size everywhere. The card always spans the text column; top and bottom are a fixed 32px, the
