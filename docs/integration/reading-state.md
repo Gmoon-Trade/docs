@@ -78,5 +78,3 @@ view.position.earnedAmounts;
 | Fee split of a coin | `coin.feeInfo()` |
 | Holders count | `coin.totalHolders()` |
 | Reward assets you can pick | `Vault.allowedAssets()` |
-| Referrer of a user | `Referrals.referrerOf(user)` |
-| Claimable referral rewards | `Referrals.pendingOf(referrer)` |

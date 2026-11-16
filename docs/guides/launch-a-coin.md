@@ -41,4 +41,3 @@ The coin has a supply of 1B coins, all in the pool. Its starting market cap is a
 
 - Claim your creator rewards from the coin's page or from your profile.
 - Deposit your coin in its Earn Vault to earn depositor rewards on top of your creator share. See [Earn](earn.md).
-- Bring creators with your referral code and earn from their coins. See [Referrals](referrals.md).

@@ -4,7 +4,7 @@ icon: lucide/activity
 
 # Events to index
 
-Everything about the protocol can be rebuilt from events. Index the Controller from its deployment block and you get every coin, then the Hook, the Vault and Referrals for trades, deposits and rewards. This gives a source of truth that does not depend on any Gmoon service.
+Everything about the protocol can be rebuilt from events. Index the Controller from its deployment block and you get every coin, then the Hook and the Vault for trades, deposits and rewards. This gives a source of truth that does not depend on any Gmoon service.
 
 ## What to index
 
@@ -21,9 +21,6 @@ Everything about the protocol can be rebuilt from events. Index the Controller f
 | Fees converted to rewards | Vault | `FeesConverted(meme, epoch, usdgIn, toStakers, toCreator)` |
 | Fees credited | Vault | `FeesNotified(meme, toStakers, toCreator)` |
 | Creator handover | Vault | `CreatorTransferStarted`, `CreatorTransferred` |
-| Referral codes | Referrals | `CodeRegistered(referrer, codeHash, code)` |
-| Referral links | Referrals | `ReferrerSet(user, referrer, codeHash)`, `TokenRegistered(meme, creator, referrer)` |
-| Referral rewards | Referrals | `FeeReceived(meme, referrer, amount, refAmount)`, `ReferralPaid(referrer, amount)` |
 | Coin metadata changes | Coin | `UpdateImage`, `UpdateDescription`, `UpdateTokenURI` |
 
 ## Details that matter when indexing
@@ -55,6 +52,5 @@ Start each contract at the block it was deployed in. Nothing earlier exists for 
 |----------|-------------|
 | Earn Vault | 104517469 |
 | Controller | 104517510 |
-| Referrals | 104517526 |
 | Hook | 104517532 |
 | Lens | 104518881 |

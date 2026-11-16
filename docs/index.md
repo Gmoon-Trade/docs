@@ -131,9 +131,8 @@ Fees by recipient:
 
 </div>
 
-<div class="u-cards u-cards--3" markdown>
+<div class="u-cards u-cards--2" markdown>
 
-[:lucide-user-round-plus: **Referrals**<br>Bring creators and earn fees from the coins they launch](guides/referrals.md){ .u-card }
 [:lucide-chart-pie: **Reward assets**<br>Stocks, ETFs and crypto that rewards are paid in](concepts/reward-assets.md){ .u-card }
 [:lucide-file-code: **Contracts**<br>Addresses of the protocol contracts](integration/contracts.md){ .u-card }
 

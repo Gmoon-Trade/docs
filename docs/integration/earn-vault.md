@@ -11,7 +11,7 @@ The app and the guides say *deposit*. The contract calls the same action `stake`
 ## How fees reach the vault
 
 1. After each swap the Hook sends the whole fee, in USDG, to the Vault with `notifyFees(coin, amount)`.
-2. The Vault sends the protocol share (25%) to Referrals at once. The rest is credited in USDG right away: the creator share to the creator, the remainder pro rata to the current depositors. While nothing is deposited, the creator receives the whole vault part.
+2. The Vault sends the protocol share (25%) to the protocol at once. The rest is credited in USDG right away: the creator share to the creator, the remainder pro rata to the current depositors. While nothing is deposited, the creator receives the whole vault part.
 3. When the vault's pending USDG reaches the conversion threshold ($5), it is swapped into the coin's reward assets by their weights.
 4. Depositors and the creator claim the converted assets.
 
