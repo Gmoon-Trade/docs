@@ -242,6 +242,28 @@ body { -webkit-font-smoothing: antialiased; background: var(--bg-1); }
 .md-typeset .highlight { border-radius: 12px; margin: 0 0 24px; }
 .md-clipboard { color: var(--tf-4); }
 .md-clipboard:hover { color: var(--tf-1); }
+/* Code copy button: no box around it, a plain tf-3 icon that gets a bg-4 round backing on hover. */
+.md-typeset .md-code__nav { background: none; padding: 0; top: 8px; right: 8px; }
+.md-typeset .md-code__button { width: 32px; height: 32px; border-radius: 8px; color: var(--tf-3); outline: none; transition: color .15s, background-color .15s; }
+.md-typeset .md-code__button:hover, .md-typeset .md-code__button.focus-visible { color: var(--tf-1); background: var(--bg-4); }
+.md-typeset .md-code__button--active { color: var(--tf-1) !important; }
+.md-typeset .md-code__button::after { width: 18px; height: 18px; }
+/* "Copied to clipboard" = the front's copy toast (front/src/styles/shared.css .copied-toast, sonner top-center):
+   a 36px dark pill with a tf-3 check, 24px from the top, sliding down while it fades in. */
+.md-dialog {
+  top: 24px; bottom: auto; min-width: 0;
+  display: flex; align-items: center; gap: 4px; height: 36px; padding: 8px 16px 8px 8px; box-sizing: border-box;
+  border-radius: 40px; background: var(--bg-3); box-shadow: 0 6px 32px rgb(0 0 0 / 35%);
+  transform: translate(-50%, -16px); transition: transform 0ms .4s, opacity .4s; z-index: 10;
+}
+[dir] .md-dialog { left: 50%; right: auto; } /* beats Material's [dir=ltr] .md-dialog { right: .8rem } */
+.md-dialog--active { transform: translate(-50%, 0); transition: transform .4s cubic-bezier(.21, 1.02, .73, 1), opacity .4s; }
+.md-dialog::before {
+  content: ""; flex-shrink: 0; width: 20px; height: 20px; background: var(--tf-3);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath transform='scale(1.2)' stroke-width='1.6667' d='M5.3811 9.13138L9.39272 13.143L15.0155 6.22253'/%3E%3C/svg%3E") center / contain no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath transform='scale(1.2)' stroke-width='1.6667' d='M5.3811 9.13138L9.39272 13.143L15.0155 6.22253'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+.md-dialog__inner { color: var(--tf-1); font: 500 14px/14px Inter, Arial, sans-serif; white-space: nowrap; }
 .md-typeset kbd { background: var(--bg-4); color: var(--tf-2); border: 0; box-shadow: none; border-radius: 6px; }
 .md-typeset blockquote { border-left: 2px solid var(--border-2); color: var(--tf-3); padding-left: 16px; }
 
