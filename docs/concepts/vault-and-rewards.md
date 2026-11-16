@@ -151,7 +151,7 @@ Example coin:
 </svg>
 </div>
 
-A depositor who withdraws before the epoch ends doesn't lose the rewards earned in it. Their USDG part of that epoch becomes claimable in assets after the epoch is converted, even though their coins are no longer in the vault.
+A depositor who withdraws before the epoch ends doesn't lose the rewards earned in it. Their USDG part of that epoch is converted into the reward assets when the epoch ends and then becomes claimable, even though their coins are no longer in the vault.
 
 ## Deposit
 
