@@ -4,35 +4,35 @@ icon: lucide/landmark
 
 # Earn
 
-Deposit a coin in its Earn Vault and receive your share of the coin's trading fees, paid in tokenized stocks, ETFs and crypto picked by the coin's creator.
+Deposit a coin in its Earn Vault and earn a share of the coin's trading fees. Rewards are paid in the tokenized stocks, ETFs and crypto that the coin's creator picked at launch.
 
-## Deposit
+## Learn how you earn
 
-1. Open the coin's page, or the **Staking** page for a list of vaults.
-2. Choose **Deposit**, enter the amount and confirm. The first deposit asks for an approval.
+Every buy and sell of the coin pays a fee, and 75% of it goes to the coin's Earn Vault. The creator takes their share, from 0% to 50%, and depositors split the rest by vault share. Your vault share is your deposit divided by all coins deposited in the vault. You earn only from fees that arrive while your coins are in the vault.
 
-There is no minimum and no lock. Your share of the vault is your deposit divided by all coins deposited.
+The vault collects fees in epochs. When an epoch's fees reach $5, the vault converts them into the reward assets, and your rewards from that epoch become claimable.
 
-## How you earn
+See [Vault and rewards](../concepts/vault-and-rewards.md) for details.
 
-- Every buy and sell of the coin pays a fee. 75% of it goes to the vault, and the creator takes their share (0% to 50%). You and the other depositors split the rest by deposit size.
-- You earn only the fees that arrive while your coins are in the vault.
-- When the vault has collected $5, it swaps the amount into the coin's reward assets by their weights. Your rewards become claimable after that swap.
+## Deposit coins
 
-See [Vault and rewards](../concepts/vault-and-rewards.md) for the full picture.
+1. Open the coin's page, or the Earn page for a list of vaults.
+2. Choose Deposit, enter the amount and confirm. The first deposit asks for an approval.
 
-## Claim
+There is no minimum amount and no lock period.
 
-Open the coin's page or the **Staking** page and press **Claim**. You receive each reward asset in your wallet. You can claim at any time.
+## Withdraw coins
 
-## Withdraw
+1. Open the coin's page, or the Earn page for a list of vaults.
+2. Choose Withdraw, enter the amount and confirm.
 
-Choose **Withdraw** and confirm. Withdrawn coins stop earning. Rewards you already earned stay claimable.
+You can withdraw all or part of your coins at any time. You can withdraw only the coins, or withdraw the coins and claim the rewards in the same transaction.
 
-## Creators
+A withdrawal reduces your vault share. Rewards earned before the withdrawal are still claimable, but withdrawn coins earn nothing from later fees.
 
-The creator of a coin claims their share from the coin's page. It is paid in the same reward assets.
+## Claim rewards
 
-## From code
+1. Open the coin's page, or the Earn page for a list of vaults.
+2. Choose Claim and confirm. You receive every reward asset in one transaction.
 
-See [Earn Vault](../integration/earn-vault.md).
+You can claim rewards at any time, even after withdrawing all your coins. Rewards become claimable when the epoch they were earned in ends and the vault converts it. Unclaimed rewards stay in the vault and don't expire.

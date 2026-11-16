@@ -12,13 +12,13 @@ theme:
     accent: custom
   features:
     - navigation.instant
-    - navigation.top
     - navigation.sections
     - content.code.copy
 extra_css:
   - stylesheets/web3.css
 extra_javascript:
   - javascripts/header.js
+  - javascripts/fee-chart.js
 nav:
   - Get Started:
       - Overview: index.md
@@ -29,7 +29,6 @@ nav:
   - Concepts:
       - Coin and pool: concepts/coin-and-pool.md
       - Trading fees: concepts/trading-fees.md
-      - Anti-sniper fee: concepts/anti-sniper-fee.md
       - Vault and rewards: concepts/vault-and-rewards.md
       - Reward assets: concepts/reward-assets.md
   - Integration:

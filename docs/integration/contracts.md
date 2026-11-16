@@ -53,6 +53,6 @@ The function and event signatures in this section come from the interfaces `IGem
 |-----------|------|
 | Launch a coin from code | [Launching a coin](launching-a-coin.md) |
 | Buy or sell a coin | [Buying and selling](buying-and-selling.md) |
-| Stake coins and claim rewards | [Earn Vault](earn-vault.md) |
+| Deposit coins and claim rewards | [Earn Vault](earn-vault.md) |
 | Read coins, prices, balances, rewards | [Reading state](reading-state.md) |
 | Index the protocol | [Events to index](events.md) |

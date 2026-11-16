@@ -67,7 +67,7 @@ The caller and the Controller are added to the coin's admins automatically. Admi
 
 With `devBuy.memeAmount` above zero, the caller becomes the first buyer of the pool in the same transaction, so nobody can buy before them.
 
-- The buy pays the coin's own trading fee, not the [anti-sniper fee](../concepts/anti-sniper-fee.md).
+- The buy pays the coin's own trading fee, not the [anti-sniper fee](../concepts/trading-fees.md#anti-sniper-fee).
 - It is paid in USDG. Approve the Controller for `maxPairIn` USDG first.
 - `memeAmount` is limited to 80% of the supply (`MAX_DEV_BUY_BIPS` = 8000). Above it, the call reverts with `DevBuyTooLarge`.
 - If the price of `memeAmount` plus fee exceeds `maxPairIn`, the call reverts with `DevBuySlippage`.

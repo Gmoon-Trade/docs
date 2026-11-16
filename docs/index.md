@@ -5,23 +5,51 @@ icon: lucide/book-open
 
 # Protocol overview
 
-Gmoon is a coin launchpad on Robinhood Chain. Every coin launches in one transaction straight into its own Uniswap v4 pool paired with USDG, so trading is live from the first block, with no bonding curve and no graduation. Every coin has a fixed supply of 1B and starts at a market cap of about $20K.
+Gmoon is a coin launchpad on Robinhood Chain. A coin launches in one transaction into its own Uniswap v4 pool with USDG and can be traded from the first block. There is no bonding curve and no graduation.
 
-Each coin has a trading fee from 1% to 5%, set by its creator at launch and charged on every buy and sell. Most of the fee goes to the coin's Earn Vault. Holders who deposit their coins in the vault share these fees in proportion to their deposit and receive them in a basket of tokenized stocks, ETFs and crypto assets that the creator picks at launch. The rest of the fee goes to the protocol.
+Every buy and sell in the pool pays a fee of 1% to 5%. The coin's Earn Vault gets 75% of the fee, and the protocol gets 25%. The creator takes their share of the vault's part, and holders who deposit the coin split the rest by their vault share. Rewards are paid in tokenized stocks, ETFs and crypto assets chosen by the coin's creator at launch. The stocks and ETFs are Robinhood Stock Tokens, each backed 1:1 by the underlying share. See [Reward assets](concepts/reward-assets.md).
 
-## How a fee moves
+## Coin launch
 
-1. A buy or sell pays the trading fee in USDG: 75% goes to the Earn Vault and 25% to the protocol.
-2. Every time the vault has collected $5, it swaps the amount into the coin's reward assets by their weights.
-3. The creator receives their share of the vault rewards, from 0% to 50%. Depositors share the rest and can claim it at any time.
+A launch is one transaction. It creates the coin, opens its pool with USDG and puts the whole supply into the pool. Every coin launches on the same terms:
 
-Example: a creator launches a coin with a 2% trading fee and a 20% creator share, picks NVDA, TSLA and SPY as reward assets, and joined Gmoon with someone's referral code. The coin trades $1M in volume, so buys and sells pay $20K in fees:
+- Every coin has a supply of 1B. No more coins can be created after launch.
+- Every coin starts at a market cap of about $20K, or 50,000 coins for 1 USDG, before the creator's buy.
+- The creator gets no coins at launch. They can buy up to 80% of the supply in the launch transaction, before anyone else can trade.
+- The liquidity is locked in the pool forever.
+- For the first 10 seconds an anti-sniper fee applies. It starts at 80% and falls to the coin's fee.
+
+See [Coin and pool](concepts/coin-and-pool.md) and [Trading fees](concepts/trading-fees.md#anti-sniper-fee).
+
+## What the creator sets
+
+The creator sets four things at launch. None of them can be changed later.
+
+| Setting | Range | What it decides |
+|---------|-------|-----------------|
+| Trading fee | 1% to 5% | How much every buy and sell pays |
+| Creator share | 0% to 50% of the vault's 75% | Split between the creator and depositors |
+| Reward assets | 1 to 8 assets out of 64 | What vault rewards are paid in |
+| Asset weights | From 0.01% each, 100% in total | How the fees are split between the assets |
+
+## Fee distribution
+
+The hook sends every fee to the coin's Earn Vault. The vault keeps 75% for the creator and depositors, see [Vault and rewards](concepts/vault-and-rewards.md). The other 25% goes to the protocol. If the creator joined Gmoon with a referral code, the referrer gets 25% of the protocol's part, which is 6.25% of the whole fee.
+
+Example coin:
+
+- Trading fee: 2%
+- Creator share: 10%
+- Reward assets: NVDA, TSLA and SPY
+- Creator's referral code: yes
+- Trading volume: $1M
+- Fees: $20K
 
 <div class="gm-diagram" style="--w:699.1px">
-<svg xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="13.2 22.5 932.1 406.9" style="--gm-cycle:5.7s;--gm-run:gm-run-57" role="img" aria-label="$1M of trading volume pays $20K in fees: $15K to the Earn Vault and $5K to the protocol. The vault swaps its part into NVDA, TSLA and SPY: $3K to the creator and $12K to depositors. The protocol pays $1.25K to the referrer.">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="13.2 22.5 932.1 406.9" style="--gm-cycle:5.7s;--gm-run:gm-run-57" role="img" aria-label="$1M of trading volume pays $20K in fees: $15K to the Earn Vault and $5K to the protocol. The vault converts its part into NVDA, TSLA and SPY: $1.5K to the creator and $13.5K to depositors. The protocol pays $1.25K to the referrer.">
   <defs>
     <clipPath id="gm-round" clipPathUnits="objectBoundingBox"><circle cx=".5" cy=".5" r=".5"/></clipPath>
-    <!-- Stage 1: fees split into Earn Vault and Protocol. Stage 2: the vault swaps into the assets while the protocol pays the referrer. Stage 3, from the moment stage 2 reaches the swap: creator and depositors, both 85px from the swap line. -->
+    <!-- Stage 1: fees split into Earn Vault and Protocol. Stage 2: the vault converts into the assets while the protocol pays the referrer. Stage 3, from the moment stage 2 reaches the conversion: creator and depositors, both 85px from the conversion line. -->
     <mask id="ff-m0" maskUnits="userSpaceOnUse" x="0" y="0" width="1000" height="440"><path class="d-window" d="M122 240H200V150q0-10 10-10H308" pathLength="1" style="animation-delay:0s"/></mask>
     <mask id="ff-m1" maskUnits="userSpaceOnUse" x="0" y="0" width="1000" height="440"><path class="d-window" d="M122 240H200V330q0 10 10 10H308" pathLength="1" style="animation-delay:0s"/></mask>
     <mask id="ff-m2" maskUnits="userSpaceOnUse" x="0" y="0" width="1000" height="440"><path class="d-window" d="M372 140H555" pathLength="1" style="animation-delay:2.35s"/></mask>
@@ -67,7 +95,7 @@ Example: a creator launches a coin with a 2% trading fee and a 20% creator share
   <image xlink:href="assets/reward-icons/TSLA.svg" x="584" y="124" width="32" height="32" clip-path="url(#gm-round)"/>
   <circle class="d-ring" cx="625" cy="140" r="18"/>
   <image xlink:href="assets/reward-icons/SPY.svg" x="609" y="124" width="32" height="32" clip-path="url(#gm-round)"/>
-  <text class="d-sub" x="600" y="192">Swapped into NVDA, TSLA, SPY</text>
+  <text class="d-sub" x="600" y="192">Converted into NVDA, TSLA, SPY</text>
   <circle class="d-node" cx="600" cy="340" r="32"/>
   <g class="d-icon" transform="translate(588 328)"><path d="M2 21a8 8 0 0 1 13.292-6M19 16v6M22 19h-6"/><circle cx="10" cy="8" r="5"/></g>
   <text class="d-title" x="600" y="402">Referrer</text>
@@ -75,27 +103,37 @@ Example: a creator launches a coin with a 2% trading fee and a 20% creator share
   <circle class="d-node" cx="860" cy="55" r="32"/>
   <g class="d-icon" transform="translate(848 43)"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></g>
   <text class="d-title" x="860" y="117">Creator</text>
-  <text class="d-sub" x="860" y="141">20% of the vault, $3K</text>
+  <text class="d-sub" x="860" y="141">10% of the vault, $1.5K</text>
   <circle class="d-node" cx="860" cy="225" r="32"/>
   <g class="d-icon" transform="translate(848 213)"><circle cx="10" cy="8" r="5"/><path d="M18 21a8 8 0 0 0-16 0M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3"/></g>
   <text class="d-title" x="860" y="287">Depositors</text>
-  <text class="d-sub" x="860" y="311">80% of the vault, $12K</text>
+  <text class="d-sub" x="860" y="311">90% of the vault, $13.5K</text>
 </svg>
 </div>
+
+Fees by recipient:
+
+| Recipient | Amount | Share of the fee |
+|-----------|--------|------------------|
+| Depositors | $13,500 | 67.5% |
+| Creator | $1,500 | 7.5% |
+| Creator's referrer | $1,250 | 6.25% |
+| Protocol | $3,750 | 18.75% |
+| **Total** | **$20,000** | **100%** |
 
 ## Explore the docs
 
 <div class="u-cards u-cards--3" markdown>
 
 [:lucide-rocket: **Launch a coin**<br>Pick reward assets, the fee and your share](guides/launch-a-coin.md){ .u-card }
-[:lucide-arrow-left-right: **Trade**<br>Buy and sell coins with USDG or ETH](guides/trade.md){ .u-card }
+[:lucide-arrow-left-right: **Trade**<br>Buy and sell coins with USDG](guides/trade.md){ .u-card }
 [:lucide-landmark: **Earn**<br>Deposit coins in the Earn Vault and claim rewards](guides/earn.md){ .u-card }
 
 </div>
 
 <div class="u-cards u-cards--3" markdown>
 
-[:lucide-user-round-plus: **Referrals**<br>Bring creators and earn from their fees](guides/referrals.md){ .u-card }
+[:lucide-user-round-plus: **Referrals**<br>Bring creators and earn fees from the coins they launch](guides/referrals.md){ .u-card }
 [:lucide-chart-pie: **Reward assets**<br>Stocks, ETFs and crypto that rewards are paid in](concepts/reward-assets.md){ .u-card }
 [:lucide-file-code: **Contracts**<br>Addresses of the protocol contracts](integration/contracts.md){ .u-card }
 

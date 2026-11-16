@@ -228,6 +228,8 @@ body { -webkit-font-smoothing: antialiased; background: var(--bg-1); }
 .md-typeset p { margin: 0 0 20px; }
 .md-typeset ul, .md-typeset ol { margin: 0 0 20px; }
 .md-typeset li { margin-bottom: 6px; }
+/* A lead-in line ("Example coin:") sits close to its list. */
+.md-typeset p:has(+ ul), .md-typeset p:has(+ ol) { margin-bottom: 8px; }
 .md-typeset strong { color: var(--tf-1); font-weight: 500; }
 .md-typeset hr { border-bottom: 1px dashed var(--border-2); margin: 40px 0; }
 .md-typeset .headerlink { color: var(--tf-4); }
@@ -348,7 +350,6 @@ body { -webkit-font-smoothing: antialiased; background: var(--bg-1); }
 .md-footer__title { font-size: 15px; }
 .md-footer__direction { font-size: 12px; color: var(--tf-4); text-transform: uppercase; letter-spacing: .02em; }
 .md-footer-meta { background: var(--bg-1); }
-.md-top { background: var(--bg-2); color: var(--tf-1); border-radius: 40px; box-shadow: 0 0 0 1px var(--border-1), 0 6px 32px rgb(0 0 0 / 35%); }
 
 /* phone: 16px side gutter */
 @media (max-width: 76.234375em) {
@@ -382,6 +383,9 @@ body { -webkit-font-smoothing: antialiased; background: var(--bg-1); }
 @keyframes gm-run-57 { 0% { stroke-dashoffset: .75; } 30.7%, 100% { stroke-dashoffset: -1; } }
 @keyframes gm-run-67 { 0% { stroke-dashoffset: .75; } 26.12%, 100% { stroke-dashoffset: -1; } }
 @keyframes gm-run-335 { 0% { stroke-dashoffset: .75; } 52.24%, 100% { stroke-dashoffset: -1; } }
+/* Half-length white piece (anti-sniper chart): same timing, window .375 instead of .75. */
+.gm-diagram .d-window.d-short { stroke-dasharray: .375 2; stroke-dashoffset: .375; animation-name: gm-run-57-short; }
+@keyframes gm-run-57-short { 0% { stroke-dashoffset: .375; } 30.7%, 100% { stroke-dashoffset: -1; } }
 @media (prefers-reduced-motion: reduce) { .gm-diagram .d-window { animation: none; } }
 
 /* Anchor jumps land below the sticky header (69px) with the same air as the page top. */
@@ -414,10 +418,23 @@ body { -webkit-font-smoothing: antialiased; background: var(--bg-1); }
 }
 .md-typeset table:not([class]) td a:hover code { color: var(--tf-1); box-shadow: inset 0 0 0 1px var(--tf-4); }
 .md-typeset table:not([class]) td a { text-decoration: none; }
-.md-typeset table:not([class]) td:last-child { white-space: nowrap; }
+/* The first column never wraps, except a code signature too long for one line (Integration event tables).
+   Of the rest only the address cell of asset tables stays on one line; asset tables use 10px side padding so
+   the longest asset name and the full address fit the column. */
+.md-typeset table:not([class]) th:first-child, .md-typeset table:not([class]) td:first-child:not(:has(code)) { white-space: nowrap; }
+.md-typeset table:not([class]):has(.gm-asset-logo) :is(th, td) { padding-left: 10px; padding-right: 10px; }
+.md-typeset table:not([class]) tr:has(.gm-asset-logo) td:last-child { white-space: nowrap; }
 
 /* Chart pieces inside diagrams (anti-sniper fee): grid, axis labels, end dots */
 .gm-diagram .d-grid { fill: none; stroke: var(--border-1); stroke-width: 1; }
 .gm-diagram .d-axis { fill: var(--tf-4); font-size: 15px; }
 .gm-diagram .d-curve { stroke-linejoin: round; }
 .gm-diagram .d-dot { fill: var(--bg-3); stroke: var(--tf-2); stroke-width: 1.5; }
+/* Hover readout of fee charts (javascripts/fee-chart.js): hidden until the pointer is over the chart,
+   then the fixed notes and the running piece give way to the guide line, dot and "N s · fee" label. */
+.gm-diagram.gm-scrub { touch-action: pan-y; }
+.gm-diagram .d-scrub { display: none; pointer-events: none; }
+.gm-diagram .is-scrub .d-scrub { display: inline; }
+.gm-diagram .is-scrub .d-note, .gm-diagram .is-scrub .d-hot { opacity: 0; }
+.gm-diagram .d-scrub-line { fill: none; stroke: var(--tf-4); stroke-width: 1; stroke-dasharray: 4 4; }
+.gm-diagram .d-scrub-dot { fill: var(--tf-1); }

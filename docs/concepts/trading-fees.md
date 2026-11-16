@@ -4,17 +4,46 @@ icon: lucide/percent
 
 # Trading fees
 
-Every coin has one trading fee. The creator sets it at launch, from 1% to 5% in steps of 0.1%, and it can't be changed later. The fee is charged in USDG on every buy and sell of the coin.
+Every coin trades in a Uniswap v4 pool with USDG and the Gmoon hook. The hook charges a fee in USDG on every buy and sell in the pool. Transfers between wallets, deposits to the Earn Vault and withdrawals pay no fee.
 
-## How the fee is split
+At launch the creator sets:
 
-Example: a creator launches a coin with a 2% trading fee and a 20% creator share, picks NVDA, TSLA and SPY as reward assets, and joined Gmoon with someone's referral code. The coin trades $1M in volume, so buys and sells pay $20K in fees:
+| Setting | Range | Changes later? |
+|---------|-------|----------------|
+| Trading fee | 1% to 5% | No |
+| Creator share of the vault part | 0% to 50% | No |
+| Reward assets and weights | 1 to 8 assets | No |
+
+## Buy fees
+
+On a buy, the fee is taken from the USDG you pay. The rest of the USDG buys the coin.
+
+For example, a coin has a 2% fee and you buy with 100 USDG. The fee is 2 USDG, and 98 USDG goes into the pool.
+
+## Sell fees
+
+On a sell, the fee is taken from the USDG the pool pays out. You receive the rest.
+
+For example, a coin has a 2% fee and you sell coins for 100 USDG. The fee is 2 USDG, and you receive 98 USDG.
+
+## Fee distribution
+
+The hook sends every fee to the coin's Earn Vault. The vault keeps 75% for the creator and depositors, see [Vault and rewards](vault-and-rewards.md). The other 25% goes to the protocol. If the creator joined Gmoon with a referral code, the referrer gets 25% of the protocol's part, which is 6.25% of the whole fee.
+
+Example coin:
+
+- Trading fee: 2%
+- Creator share: 10%
+- Reward assets: NVDA, TSLA and SPY
+- Creator's referral code: yes
+- Trading volume: $1M
+- Fees: $20K
 
 <div class="gm-diagram" style="--w:699.1px">
-<svg xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="13.2 22.5 932.1 406.9" style="--gm-cycle:5.7s;--gm-run:gm-run-57" role="img" aria-label="$1M of trading volume pays $20K in fees: $15K to the Earn Vault and $5K to the protocol. The vault swaps its part into NVDA, TSLA and SPY: $3K to the creator and $12K to depositors. The protocol pays $1.25K to the referrer.">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="13.2 22.5 932.1 406.9" style="--gm-cycle:5.7s;--gm-run:gm-run-57" role="img" aria-label="$1M of trading volume pays $20K in fees: $15K to the Earn Vault and $5K to the protocol. The vault converts its part into NVDA, TSLA and SPY: $1.5K to the creator and $13.5K to depositors. The protocol pays $1.25K to the referrer.">
   <defs>
     <clipPath id="gm-round" clipPathUnits="objectBoundingBox"><circle cx=".5" cy=".5" r=".5"/></clipPath>
-    <!-- Stage 1: fees split into Earn Vault and Protocol. Stage 2: the vault swaps into the assets while the protocol pays the referrer. Stage 3, from the moment stage 2 reaches the swap: creator and depositors, both 85px from the swap line. -->
+    <!-- Stage 1: fees split into Earn Vault and Protocol. Stage 2: the vault converts into the assets while the protocol pays the referrer. Stage 3, from the moment stage 2 reaches the conversion: creator and depositors, both 85px from the conversion line. -->
     <mask id="ff-m0" maskUnits="userSpaceOnUse" x="0" y="0" width="1000" height="440"><path class="d-window" d="M122 240H200V150q0-10 10-10H308" pathLength="1" style="animation-delay:0s"/></mask>
     <mask id="ff-m1" maskUnits="userSpaceOnUse" x="0" y="0" width="1000" height="440"><path class="d-window" d="M122 240H200V330q0 10 10 10H308" pathLength="1" style="animation-delay:0s"/></mask>
     <mask id="ff-m2" maskUnits="userSpaceOnUse" x="0" y="0" width="1000" height="440"><path class="d-window" d="M372 140H555" pathLength="1" style="animation-delay:2.35s"/></mask>
@@ -60,7 +89,7 @@ Example: a creator launches a coin with a 2% trading fee and a 20% creator share
   <image xlink:href="../../assets/reward-icons/TSLA.svg" x="584" y="124" width="32" height="32" clip-path="url(#gm-round)"/>
   <circle class="d-ring" cx="625" cy="140" r="18"/>
   <image xlink:href="../../assets/reward-icons/SPY.svg" x="609" y="124" width="32" height="32" clip-path="url(#gm-round)"/>
-  <text class="d-sub" x="600" y="192">Swapped into NVDA, TSLA, SPY</text>
+  <text class="d-sub" x="600" y="192">Converted into NVDA, TSLA, SPY</text>
   <circle class="d-node" cx="600" cy="340" r="32"/>
   <g class="d-icon" transform="translate(588 328)"><path d="M2 21a8 8 0 0 1 13.292-6M19 16v6M22 19h-6"/><circle cx="10" cy="8" r="5"/></g>
   <text class="d-title" x="600" y="402">Referrer</text>
@@ -68,29 +97,77 @@ Example: a creator launches a coin with a 2% trading fee and a 20% creator share
   <circle class="d-node" cx="860" cy="55" r="32"/>
   <g class="d-icon" transform="translate(848 43)"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></g>
   <text class="d-title" x="860" y="117">Creator</text>
-  <text class="d-sub" x="860" y="141">20% of the vault, $3K</text>
+  <text class="d-sub" x="860" y="141">10% of the vault, $1.5K</text>
   <circle class="d-node" cx="860" cy="225" r="32"/>
   <g class="d-icon" transform="translate(848 213)"><circle cx="10" cy="8" r="5"/><path d="M18 21a8 8 0 0 0-16 0M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3"/></g>
   <text class="d-title" x="860" y="287">Depositors</text>
-  <text class="d-sub" x="860" y="311">80% of the vault, $12K</text>
+  <text class="d-sub" x="860" y="311">90% of the vault, $13.5K</text>
 </svg>
 </div>
 
-1. **Earn Vault, 75% of the fee.** The creator share, set at launch from 0% to 50%, goes to the creator. The rest goes to the holders who deposited the coin in its Earn Vault. While nothing is deposited, the creator receives the whole vault part.
-2. **Protocol, 25% of the fee.** If the coin's creator joined Gmoon with someone's referral code, 25% of the protocol part goes to that referrer. This is 6.25% of each fee on the coin.
+Fees by recipient:
 
-## Example
+| Recipient | Amount | Share of the fee |
+|-----------|--------|------------------|
+| Depositors | $13,500 | 67.5% |
+| Creator | $1,500 | 7.5% |
+| Creator's referrer | $1,250 | 6.25% |
+| Protocol | $3,750 | 18.75% |
+| **Total** | **$20,000** | **100%** |
 
-The same $1M of volume, recipient by recipient:
+## Anti-sniper fee
 
-| Recipient | Share of the fee | Amount |
-|-----------|------------------|--------|
-| Depositors | 60% | $12,000 |
-| Creator | 15% | $3,000 |
-| Creator's referrer | 6.25% | $1,250 |
-| Protocol | 18.75% | $3,750 |
-| **Total fee** | **100%** | **$20,000** |
+For the first 10 seconds after launch, the fee starts at 80% and falls linearly to the coin's fee. It drops by the same step every second and reaches the coin's fee at 10 seconds. The extra fee is split like the normal fee.
 
-## Launch fee
+Example for a coin with a 2% fee. Hover over the chart to see the fee at each second:
 
-For the first 10 seconds after launch a higher fee applies: it starts at 80% and falls to the fee set by the creator. See [Anti-sniper fee](anti-sniper-fee.md).
+<div class="gm-diagram gm-scrub" style="--w:660px" data-fee-start="80" data-fee-base="2" data-seconds="10" data-max="12" data-x0="140" data-dx="68" data-y0="300" data-ky="3">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="90 28 880 312" style="--gm-cycle:5.7s;--gm-run:gm-run-57" role="img" aria-label="For a coin with a 2% fee, the fee is 80% at launch and falls in a straight line to 2% at 10 seconds, then stays at 2%.">
+  <defs>
+    <!-- The fee over the first 10 seconds for a coin with a 2% fee: a straight line from 80% to 2%. The white piece runs along it. -->
+    <mask id="sn-m0" maskUnits="userSpaceOnUse" x="0" y="0" width="1000" height="350"><path class="d-window d-short" d="M140 60L820 294H956" pathLength="1" style="animation-delay:0s"/></mask>
+  </defs>
+  <path class="d-line d-curve" d="M140 60L820 294H956"/>
+  <path class="d-hot d-curve" d="M140 60L820 294H956" mask="url(#sn-m0)"/>
+
+  <path class="d-grid" d="M140 300H956"/>
+  <text class="d-axis" x="124" y="305" style="text-anchor:end">0%</text>
+  <path class="d-grid" d="M140 240H956"/>
+  <text class="d-axis" x="124" y="245" style="text-anchor:end">20%</text>
+  <path class="d-grid" d="M140 180H956"/>
+  <text class="d-axis" x="124" y="185" style="text-anchor:end">40%</text>
+  <path class="d-grid" d="M140 120H956"/>
+  <text class="d-axis" x="124" y="125" style="text-anchor:end">60%</text>
+  <path class="d-grid" d="M140 60H956"/>
+  <text class="d-axis" x="124" y="65" style="text-anchor:end">80%</text>
+  <text class="d-axis" x="140" y="332">0s</text>
+  <text class="d-axis" x="208" y="332">1s</text>
+  <text class="d-axis" x="276" y="332">2s</text>
+  <text class="d-axis" x="344" y="332">3s</text>
+  <text class="d-axis" x="412" y="332">4s</text>
+  <text class="d-axis" x="480" y="332">5s</text>
+  <text class="d-axis" x="548" y="332">6s</text>
+  <text class="d-axis" x="616" y="332">7s</text>
+  <text class="d-axis" x="684" y="332">8s</text>
+  <text class="d-axis" x="752" y="332">9s</text>
+  <text class="d-axis" x="820" y="332">10s</text>
+  <text class="d-axis" x="888" y="332">11s</text>
+  <text class="d-axis" x="956" y="332">12s</text>
+  <circle class="d-dot" cx="140" cy="60" r="5"/>
+  <text class="d-title d-note" x="140" y="42" style="text-anchor:middle">80%</text>
+  <circle class="d-dot" cx="820" cy="294" r="5"/>
+  <text class="d-title d-note" x="820" y="276" style="text-anchor:middle">2%</text>
+</svg>
+</div>
+
+
+## Creator buy fees
+
+The creator gets no coins at launch but can buy the coin in the launch transaction:
+
+- The buy runs right after the pool opens, so nobody can trade before it.
+- It pays the coin's fee, not the anti-sniper fee.
+- It's capped at 80% of the supply, 800M coins.
+- The coins go to the creator's wallet.
+
+The creator's coins don't go into the Earn Vault automatically. To earn rewards on them, the creator deposits them like any other holder. A deposit doesn't change the creator share. The creator gets it as before, and the deposit earns depositor rewards on top of it.

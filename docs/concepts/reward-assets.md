@@ -4,59 +4,15 @@ icon: lucide/chart-pie
 
 # Reward assets
 
-Vault rewards are paid in assets, not in USDG. Each coin pays its rewards in a basket of assets that the creator picks at launch.
-
-## The list
-
-Rewards can be paid in 64 assets on Robinhood Chain: 51 tokenized stocks, 7 ETFs (including gold and silver) and 6 crypto assets (cbBTC, WETH and the community coins PONS, CASHCAT, AI and ORBIO). The list grows over time. See [Supported assets](#supported-assets) below for every asset and its contract.
-
-## The basket
-
-The creator picks from 1 to 8 assets and gives each a weight. The weights add up to 100%. The basket can't be changed after launch.
-
-Every time the vault swaps collected fees, it splits the amount by these weights. A $5 conversion with NVDA 50%, TSLA 30% and SPY 20%:
-
-<div class="gm-diagram" style="--w:579.6px">
-<svg xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="138.3 48.2 772.8 343.5" style="--gm-cycle:3.35s;--gm-run:gm-run-335" role="img" aria-label="A $5 conversion with weights NVDA 50%, TSLA 30% and SPY 20% buys $2.50 of NVDA, $1.50 of TSLA and $1.00 of SPY.">
-  <defs>
-    <clipPath id="gm-round" clipPathUnits="objectBoundingBox"><circle cx=".5" cy=".5" r=".5"/></clipPath>
-    <!-- The trunk runs first; the three branches start when its head reaches the fork, so the line never breaks. -->
-    <mask id="as-m0" maskUnits="userSpaceOnUse" x="0" y="0" width="1000" height="440"><path class="d-window" d="M232 220H460" pathLength="1" style="animation-delay:0s"/></mask>
-    <mask id="as-m1" maskUnits="userSpaceOnUse" x="0" y="0" width="1000" height="440"><path class="d-window" d="M460 220V90q0-10 10-10H668" pathLength="1" style="animation-delay:1s"/></mask>
-    <mask id="as-m2" maskUnits="userSpaceOnUse" x="0" y="0" width="1000" height="440"><path class="d-window" d="M460 220H668" pathLength="1" style="animation-delay:1s"/></mask>
-    <mask id="as-m3" maskUnits="userSpaceOnUse" x="0" y="0" width="1000" height="440"><path class="d-window" d="M460 220V350q0 10 10 10H668" pathLength="1" style="animation-delay:1s"/></mask>
-  </defs>
-  <path class="d-line" d="M232 220H460"/>
-  <path class="d-line" d="M460 220V90q0-10 10-10H668"/>
-  <path class="d-line" d="M460 220H668"/>
-  <path class="d-line" d="M460 220V350q0 10 10 10H668"/>
-  <path class="d-hot" d="M232 220H460" mask="url(#as-m0)"/>
-  <path class="d-hot" d="M460 220V90q0-10 10-10H668" mask="url(#as-m1)"/>
-  <path class="d-hot" d="M460 220H668" mask="url(#as-m2)"/>
-  <path class="d-hot" d="M460 220V350q0 10 10 10H668" mask="url(#as-m3)"/>
-
-  <image xlink:href="../../assets/reward-icons/USDG.svg" x="168" y="188" width="64" height="64" clip-path="url(#gm-round)"/>
-  <circle class="d-logo-ring" cx="200" cy="220" r="32"/>
-  <text class="d-title" x="200" y="282">Collected fees</text>
-  <text class="d-sub" x="200" y="306">$5 USDG</text>
-  <image xlink:href="../../assets/reward-icons/NVDA.svg" x="668" y="48" width="64" height="64" clip-path="url(#gm-round)"/>
-  <circle class="d-logo-ring" cx="700" cy="80" r="32"/>
-  <text class="d-title" x="748" y="74" style="text-anchor:start">NVDA, weight 50%</text>
-  <text class="d-sub" x="748" y="98" style="text-anchor:start">$2.50</text>
-  <image xlink:href="../../assets/reward-icons/TSLA.svg" x="668" y="188" width="64" height="64" clip-path="url(#gm-round)"/>
-  <circle class="d-logo-ring" cx="700" cy="220" r="32"/>
-  <text class="d-title" x="748" y="214" style="text-anchor:start">TSLA, weight 30%</text>
-  <text class="d-sub" x="748" y="238" style="text-anchor:start">$1.50</text>
-  <image xlink:href="../../assets/reward-icons/SPY.svg" x="668" y="328" width="64" height="64" clip-path="url(#gm-round)"/>
-  <circle class="d-logo-ring" cx="700" cy="360" r="32"/>
-  <text class="d-title" x="748" y="354" style="text-anchor:start">SPY, weight 20%</text>
-  <text class="d-sub" x="748" y="378" style="text-anchor:start">$1.00</text>
-</svg>
-</div>
+The vault pays rewards in assets, not in USDG. The creator picks these assets and their weights at launch, see [Vault and rewards](vault-and-rewards.md).
 
 ## Supported assets
 
-Addresses are token contracts on Robinhood Chain.
+Rewards can be paid in 64 assets on Robinhood Chain. There are 51 tokenized stocks, 7 ETFs and 6 crypto assets.
+
+The stocks and ETFs are Robinhood Stock Tokens, issued by Robinhood Assets (Jersey) Limited. Each token is backed 1:1 by the underlying share. The shares are bought and held by Alpaca Securities LLC, a US broker and custodian. A token gives the share's price exposure but no shareholder rights.
+
+Missing an asset? Reach us at [support@gmoon.trade](mailto:support@gmoon.trade).
 
 | Asset | Type | Contract |
 |-------|------|----------|

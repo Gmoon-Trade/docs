@@ -1,4 +1,4 @@
-{#- Material's TOC, but the page title (H1) stays in the list as the first item, on the same level as the sections. -#}
+{#- Material's TOC, but the page title (H1) stays in the list as the first item, on the same level as the sections, labeled "Introduction". -#}
 {% set title = lang.t("toc") %}
 {% if config.mdx_configs.toc and config.mdx_configs.toc.title %}
   {% set title = config.mdx_configs.toc.title %}
@@ -20,7 +20,7 @@
       {% if page_title %}
         <li class="md-nav__item">
           <a href="{{ page_title.url }}" class="md-nav__link">
-            <span class="md-ellipsis">{{ page_title.title }}</span>
+            <span class="md-ellipsis">Introduction</span>
           </a>
         </li>
       {% endif %}

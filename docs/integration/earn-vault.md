@@ -11,13 +11,13 @@ The app and the guides say *deposit*. The contract calls the same action `stake`
 ## How fees reach the vault
 
 1. After each swap the Hook sends the whole fee, in USDG, to the Vault with `notifyFees(coin, amount)`.
-2. The Vault sends the protocol share (25%) to Referrals at once. The rest is credited in USDG right away: the creator share to the creator, the remainder pro rata to the current stakers. While nobody stakes, the creator receives the whole vault part.
+2. The Vault sends the protocol share (25%) to Referrals at once. The rest is credited in USDG right away: the creator share to the creator, the remainder pro rata to the current depositors. While nothing is deposited, the creator receives the whole vault part.
 3. When the vault's pending USDG reaches the conversion threshold ($5), it is swapped into the coin's reward assets by their weights.
-4. Stakers and the creator claim the converted assets.
+4. Depositors and the creator claim the converted assets.
 
-A staker earns only the fees that arrive while they are staked. Only converted rewards can be claimed.
+A depositor earns only the fees that arrive while their coins are deposited. Only converted rewards can be claimed.
 
-## Stake and unstake
+## Deposit and withdraw
 
 ```solidity
 function stake(address coin, uint256 amount) external;
@@ -26,7 +26,7 @@ function unstake(address coin, uint256 amount) external;
 function exit(address coin) external;   // unstake everything and claim everything
 ```
 
-`stake` pulls the coin from the caller, so approve the Vault first, or use `stakeWithPermit` with an EIP-2612 signature to skip the approval. `unstake` always works, even when the Vault is paused. Staking is not locked: you can leave at any time.
+`stake` pulls the coin from the caller, so approve the Vault first, or use `stakeWithPermit` with an EIP-2612 signature to skip the approval. `unstake` always works, even when the Vault is paused. Deposits are not locked, and you can withdraw at any time.
 
 ```ts
 await walletClient.writeContract({
@@ -82,8 +82,8 @@ function acceptCreator(address coin) external;                       // the nomi
 | `isRegistered(coin)` | Whether the coin has a vault |
 | `getAssets(coin)` | Reward assets and weights (`AssetConfig[]`) |
 | `vaultInfo(coin)` | Creator, `totalStaked`, pending USDG, creator share and more |
-| `stakedOf(coin, account)` | Coins staked by the account |
-| `totalStaked(coin)` | Coins staked in the vault |
+| `stakedOf(coin, account)` | Coins deposited by the account |
+| `totalStaked(coin)` | Coins deposited in the vault |
 | `earned(coin, account)` | Claimable rewards per asset |
 | `pendingCreditOf(coin, account)` | USDG credited in the open epoch, not converted yet |
 | `creatorOf(coin)`, `creatorShareBpsOf(coin)` | Creator and its share |
@@ -111,7 +111,7 @@ function acceptCreator(address coin) external;                       // the nomi
 | `FeesConverted(meme, epoch, usdgIn, toStakers, toCreator)` | An epoch was converted |
 | `ConversionFailed(meme, reason)` | An automatic conversion failed and will be retried |
 | `Staked`, `Unstaked(meme, account, amount)` | Deposit and withdrawal |
-| `RewardPaid(meme, account, asset, amount)` | A staker claimed |
+| `RewardPaid(meme, account, asset, amount)` | A depositor claimed |
 | `CreatorRewardPaid(meme, creator, asset, amount)` | The creator claimed |
 | `CreatorTransferStarted`, `CreatorTransferred` | Creator handover |
 
@@ -120,7 +120,7 @@ function acceptCreator(address coin) external;                       // the nomi
 | Error | Cause |
 |-------|-------|
 | `VaultNotRegistered(meme)` | The address is not a coin with a vault |
-| `InsufficientStake(staked, requested)` | Unstaking more than staked |
+| `InsufficientStake(staked, requested)` | Withdrawing more than deposited |
 | `ZeroAmount` | Zero amount |
 | `AssetNotInVault(meme, asset)` | Claiming an asset the vault doesn't pay |
 | `NothingToConvert`, `BelowConversionThreshold(pending, threshold)` | Manual conversion not possible yet |

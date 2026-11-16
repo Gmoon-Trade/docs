@@ -4,38 +4,42 @@ icon: lucide/droplets
 
 # Coin and pool
 
-What a launch creates in one transaction: the coin, its Uniswap v4 pool with USDG, the starting price, the liquidity and the creator's buy.
+A launch is one transaction. It creates the coin, opens a Uniswap v4 pool with USDG and puts the whole supply into the pool. The coin can be traded from the same block, with no bonding curve and no graduation. The launch also creates the coin's Earn Vault. See [Vault and rewards](vault-and-rewards.md).
 
 ## The coin
 
-| | |
-|-|-|
-| Supply | 1,000,000,000, fixed. Nothing is minted later. |
-| Decimals | 18 |
-| Standard | ERC-20 with ERC-165 and ERC-1046 (on-chain metadata) |
-| Metadata | Image, description, X, Telegram, Farcaster and website. Admins can update the image and the description. |
+Each coin is a separate ERC-20 contract with support for ERC-165 and ERC-1046 (on-chain metadata).
+
+- The contract has no mint function. The supply is fixed at 1B.
+- The contract has no blacklist, no pause and no limit on wallet balances.
+- The contract has no owner and no proxy, so its logic can't be changed.
+- After launch the creator can change only the image and metadata.
+
+| Property | Value | Fixed |
+|----------|-------|-------|
+| Supply | 1B coins | Yes |
+| Decimals | 18 | Yes |
 
 ## The pool
 
-Every coin gets its own Uniswap v4 pool against USDG:
+Every coin gets its own Uniswap v4 pool against USDG. The whole supply goes into the pool as the starting liquidity, so the coin trades from the first block. The liquidity is locked forever because the Controller contract owns the position and has no function to withdraw or move it.
 
-- The whole supply goes into the pool as the starting liquidity, so the coin trades from the first block.
-- The start price is 50,000 coins per 1 USDG, a market cap of about $20K.
-- There is no bonding curve and no graduation. The coin trades in the same pool for its whole life.
-- The pool's own LP fee is 0. The trading fee is charged by the Gmoon Hook in USDG. See [Trading fees](trading-fees.md).
+- The start price is 50,000 coins per 1 USDG. The starting market cap is about $20K.
+- There is no bonding curve and no graduation.
 
-## The creator's buy
+| Parameter | Value |
+|-----------|-------|
+| Paired with | USDG |
+| LP fee | 0 |
+| Hook fee | 1% to 5% |
+| Tick spacing | 200 |
 
-The creator can buy their own coin in the launch transaction, before anyone else can trade. They can take up to 80% of the supply. The buy pays the coin's own fee, not the [anti-sniper fee](anti-sniper-fee.md).
+## The hook
 
-## What the creator sets
+The Gmoon hook is a Uniswap v4 hook contract. All pools created through Gmoon use this hook. The hook has no owner and no proxy, so its logic can't be changed.
 
-| Setting | Range | Changes later? |
-|---------|-------|----------------|
-| Trading fee | 1% to 5% | No |
-| Creator share of the vault part | 0% to 50% | No |
-| Reward assets and weights | 1 to 8 assets | No |
+1. The hook takes a fee in USDG on every trade. See [Trading fees](trading-fees.md).
+2. At the end of the trade, the hook sends the fee to the coin's [Earn Vault](vault-and-rewards.md).
+3. For the first 10 seconds after launch, the hook charges a higher fee, see [Anti-sniper fee](trading-fees.md#anti-sniper-fee).
 
-## The Earn Vault
-
-Each launch also registers an Earn Vault for the coin. See [Vault and rewards](vault-and-rewards.md).
+The vault splits the fee and converts it into rewards.

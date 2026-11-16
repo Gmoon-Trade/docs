@@ -23,7 +23,7 @@ function creators(address[] calldata coins) external view returns (CreatorReward
 | Function | Use it for |
 |----------|-----------|
 | `tokens(coins, account)` | Everything about a coin: metadata, market, vault and the account's position. Pass `address(0)` as the account to skip account reads. |
-| `markets(coins)` | Light refresh of prices and staked totals, without strings |
+| `markets(coins)` | Light refresh of prices and deposited totals, without strings |
 | `quotes(assets, amountIn)` | How much of each reward asset `amountIn` USDG buys right now |
 | `protocol()` | USDG, swap adapter, conversion threshold, hook and PoolManager in one call |
 | `creator(coin)`, `creators(coins)` | The creator and the creator rewards claimable now |

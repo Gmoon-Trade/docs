@@ -35,7 +35,7 @@ The fee is always charged in USDG, on top of the swap as the pool prices it:
 - on a **buy**, you pay `pairAmount + fee` USDG;
 - on a **sell**, you receive `pairAmount - fee` USDG.
 
-For the first 10 seconds after launch the fee falls from 80% to the coin's fee, then stays at the coin's fee (1% to 5%). See [Trading fees](../concepts/trading-fees.md) and [Anti-sniper fee](../concepts/anti-sniper-fee.md). A quote from the Uniswap v4 Quoter already includes the fee.
+For the first 10 seconds after launch the fee falls from 80% to the coin's fee, then stays at the coin's fee (1% to 5%). See [Trading fees](../concepts/trading-fees.md) and [Anti-sniper fee](../concepts/trading-fees.md#anti-sniper-fee). A quote from the Uniswap v4 Quoter already includes the fee.
 
 To read the fee of a coin:
 
