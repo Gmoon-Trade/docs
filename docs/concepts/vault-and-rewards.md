@@ -131,7 +131,7 @@ Example coin:
   <image xlink:href="../../assets/reward-icons/TSLA.svg" x="484" y="224" width="32" height="32" clip-path="url(#gm-round)"/>
   <circle class="d-ring" cx="525" cy="240" r="18"/>
   <image xlink:href="../../assets/reward-icons/SPY.svg" x="509" y="224" width="32" height="32" clip-path="url(#gm-round)"/>
-  <text class="d-sub" x="500" y="292">Converted every $5</text>
+  <text class="d-sub" x="500" y="292">Converted into NVDA, TSLA, SPY</text>
   <circle class="d-node" cx="660" cy="75" r="32"/>
   <g class="d-icon" transform="translate(648 63)"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></g>
   <text class="d-title" x="708" y="69" style="text-anchor:start">Creator</text>
